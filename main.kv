@@ -1,0 +1,45 @@
+<MainScreen>
+    MDBoxLayout:
+        orientation: 'vertical'
+        MDTopAppBar:
+            title: 'POLYGLOT\nАНГЛИЙСКИЙ'
+        MDScrollView:
+            MDList:
+                id: box
+
+<DetailScreen>
+    MDBoxLayout:
+        orientation: 'vertical'
+
+        MDTopAppBar:
+            id: mytitle
+
+        MDScrollView:
+
+            TwoLineAvatarIconListItem:
+                text: 'Теория к уроку'
+                secondary_text: 'Грамматическая справка по уроку'
+
+                IconLeftWidget: 
+                    icon: 'home'
+
+                IconRightWidget:
+                    icon: 'minus'
+
+            TwoLineAvatarIconListItem:
+                text: 'Словарь'
+                secondary_text: 'Новые слова к уроку'
+
+                    IconLeftWidget: 
+                        icon: 'home'
+
+                    IconRightWidget:
+                        icon: 'minus'
+
+            MDRaisedButton:
+                text: 'Welcome!'
+
+
+
+#MDList:
+#id: box
