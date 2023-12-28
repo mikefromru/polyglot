@@ -1,8 +1,11 @@
 <MainScreen>
     MDBoxLayout:
         orientation: 'vertical'
+
         MDTopAppBar:
             title: 'POLYGLOT\nАНГЛИЙСКИЙ'
+            elevation: 0
+
         MDScrollView:
             MDList:
                 id: box
@@ -13,33 +16,43 @@
 
         MDTopAppBar:
             id: mytitle
-
+            elevation: 0
+            left_action_items: [["chevron-left", lambda x: root.go_back()]]
+            right_action_items: [["home", lambda x: root.callback_back()]]
+    
         MDScrollView:
 
-            TwoLineAvatarIconListItem:
-                text: 'Теория к уроку'
-                secondary_text: 'Грамматическая справка по уроку'
+            MDList:
 
-                IconLeftWidget: 
-                    icon: 'home'
-
-                IconRightWidget:
-                    icon: 'minus'
-
-            TwoLineAvatarIconListItem:
-                text: 'Словарь'
-                secondary_text: 'Новые слова к уроку'
+                TwoLineAvatarIconListItem:
+                    text: 'Теория к уроку'
+                    secondary_text: 'Грамматическая справка по уроку'
 
                     IconLeftWidget: 
-                        icon: 'home'
+                        icon: 'school'
 
                     IconRightWidget:
-                        icon: 'minus'
+                        icon: 'chevron-right'
 
-            MDRaisedButton:
-                text: 'Welcome!'
+                TwoLineAvatarIconListItem:
+                    text: 'Словарь'
+                    secondary_text: 'Новые слова к уроку'
 
+                    IconLeftWidget: 
+                        icon: 'translate'
 
+                    IconRightWidget:
+                        icon: 'chevron-right'
 
+#TwoLineAvatarListItem:
+                TwoLineAvatarIconListItem:
+                    text: 'Начать тренировку'
+                    secondary_text: 'Закрепление материала'
+
+ 
+                    IconRightWidget:
+                        icon: 'chevron-right'
+
+                            
 #MDList:
 #id: box

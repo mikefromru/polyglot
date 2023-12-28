@@ -7,7 +7,9 @@ from kivymd.uix.list import MDList, OneLineAvatarIconListItem, IconLeftWidget
 from kivymd.uix.list import TwoLineAvatarIconListItem, IconLeftWidget, IconRightWidget
 from kivy.lang import Builder
 
-from kivy.properties import ObjectProperty, StringProperty
+from kivy.clock import Clock
+
+from kivy.properties import ObjectProperty, StringProperty, ListProperty
 from kivy.uix.screenmanager import ScreenManager, Screen
 
 import sqlite3
@@ -22,23 +24,32 @@ class DetailScreen(Screen):
         print(self.level)
         print('-----')
 
+    def go_back(self):
+        self.manager.current = 'main_screen'
+        
 class MainScreen(Screen):
+    
+    #lst = ListProperty()
 
-
-    def on_enter(self):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
         con = sqlite3.connect('db.sqlite3')
         cur = con.cursor()
 
         cur.execute('select * from levels')
-        levels = cur.fetchall()
+        self.levels = cur.fetchall()
+        print('<<<< Main Screen >>>>>')
+
+        Clock.schedule_once(self.on_enter_plus, 1)
         
+    def on_enter_plus(self, i):
+
         self.lst = []
 
-        for x in levels:
+        for x in self.levels:
             self.lst.append({'id': x[0], 'availebl': x[1], 'name': x[2]})
 
-        print(self.lst)
         for i in self.lst:
             self.ids.box.add_widget(
                 TwoLineAvatarIconListItem(
@@ -53,12 +64,12 @@ class MainScreen(Screen):
 
 
     def get_level(self, instance):
-        MDApp.get_running_app().sm.add_widget(DetailScreen(name='detail_screen'))
-        #print(instance.id, instance.text)
-        print(instance.text, ' <<')
         DetailScreen.level = {'id': instance.id, 'name': instance.text}
-        #DetailScreen.level = instance.text
         self.manager.current = 'detail_screen'
+
+    def on_leave(self):
+        #self.ids.box.clear_widgets()
+        pass
 
 
 
@@ -71,6 +82,8 @@ class MyApp(MDApp):
 
         self.sm = ScreenManager()
         self.sm.add_widget(MainScreen(name='main_screen'))
+        self.sm.add_widget(DetailScreen(name='detail_screen'))
+        #MDApp.get_running_app().sm.add_widget(DetailScreen(name='detail_screen'))
 
         self.theme_cls.theme_style = "Light"
         return self.sm
